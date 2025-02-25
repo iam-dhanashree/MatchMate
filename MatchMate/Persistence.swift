@@ -14,10 +14,15 @@ struct PersistenceController {
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
+        for i in 0..<10 {
+                    let newMatch = MatchEntity(context: viewContext)
+                    newMatch.id = UUID()
+                    newMatch.name = "Person \(i + 1)"
+                    newMatch.age = Int16(Int32(20 + i)) // Mock age 20, 21, ...
+                    newMatch.location = "City \(i + 1)"
+                    newMatch.imageUrl = "https://randomuser.me/api/portraits/men/\(i).jpg"
+                    newMatch.status = i % 2 == 0 ? "Accepted" : "Declined" // Alternate status
+                }
         do {
             try viewContext.save()
         } catch {
