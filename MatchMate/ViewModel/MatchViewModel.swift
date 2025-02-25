@@ -33,16 +33,17 @@ class MatchViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    // Save data from API into Core Data
     private func saveMatchesToCoreData(_ matches: [Match]) {
         let fetchRequest: NSFetchRequest<MatchEntity> = MatchEntity.fetchRequest()
         
         do {
-            let existingMatches = try context.fetch(fetchRequest).compactMap { $0.id?.uuidString } // ✅ Convert UUID to String
+            let existingMatches = try context.fetch(fetchRequest).compactMap { $0.id?.uuidString }
             
             for match in matches {
-                if !existingMatches.contains(match.id) {  // ✅ Compare safely
+                if !existingMatches.contains(match.id) {
                     let newMatch = MatchEntity(context: context)
-                    newMatch.id = UUID(uuidString: match.id) ?? UUID() // ✅ Convert String to UUID
+                    newMatch.id = UUID(uuidString: match.id) ?? UUID()
                     newMatch.name = match.name
                     newMatch.age = Int16(match.age)
                     newMatch.location = match.location
@@ -57,7 +58,6 @@ class MatchViewModel: ObservableObject {
             print("Core Data Save Error: \(error.localizedDescription)")
         }
     }
-    
     
     /// Fetch saved matches from Core Data
     func fetchSavedMatches() {

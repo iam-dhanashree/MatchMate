@@ -24,14 +24,11 @@ struct StatusView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
-                            .padding(14)
-                            .background(match.status == .declined ? Color.red : Color.white.opacity(0.2))
+                            .padding(12)
+                            .background(Color.white.opacity(0.2))
                             .clipShape(Circle())
-                            .foregroundColor(match.status == .declined ? .white : .white)
-                        
-                        Text("Decline")
-                            .font(.caption)
-                            .foregroundColor(match.status == .declined ? .red : .white.opacity(0.8))
+                            .overlay(Circle().stroke(Color.red.opacity(0.6), lineWidth: 2))
+                            .foregroundColor(.red.opacity(0.6))
                     }
                 }
                 
@@ -45,14 +42,12 @@ struct StatusView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
-                            .padding(14)
-                            .background(match.status == .accepted ? Color.green : Color.white.opacity(0.2))
+                            .padding(12)
+                            .background(Color.white.opacity(0.2))
                             .clipShape(Circle())
-                            .foregroundColor(match.status == .accepted ? .white : .white)
-                        
-                        Text("Accept")
-                            .font(.caption)
-                            .foregroundColor(match.status == .accepted ? .green : .white.opacity(0.8))
+                            .overlay(Circle().stroke(Color.green.opacity(0.6), lineWidth: 2))
+                            .foregroundColor(.green.opacity(0.6))
+
                     }
                 }
             } else {
@@ -61,14 +56,14 @@ struct StatusView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 16, height: 16)
-                        .padding(14)
-                        .background(match.status == .accepted ? Color.green : Color.white.opacity(0.2))
+                        .padding(12)
+                        .background(match.status == .accepted ? Color.green.opacity(0.2) : Color.red.opacity(0.2))
                         .clipShape(Circle())
-                        .foregroundColor(match.status == .declined ? .red : .white.opacity(0.8))
+                        .foregroundColor(match.status == .declined ? .red.opacity(0.8) : .green.opacity(0.8))
                     
                     Text(match.status == .accepted ? "Accepted" : "Declined")
                         .font(.caption)
-                        .foregroundColor(match.status == .accepted ? .green : .white.opacity(0.8))
+                        .foregroundColor(match.status == .accepted ? .green.opacity(0.8) : .red.opacity(0.8))
                 }
             }
         }

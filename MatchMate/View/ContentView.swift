@@ -31,7 +31,7 @@ struct ContentView: View {
                     } else {
                         ForEach(viewModel.matches) { match in
                             MatchCardView(match: match, viewModel: viewModel)
-                                .padding(.horizontal)
+                                .background(RoundedRectangle(cornerRadius: 15).fill(Color.white).shadow(radius: 5))
                         }
                     }
                 }
