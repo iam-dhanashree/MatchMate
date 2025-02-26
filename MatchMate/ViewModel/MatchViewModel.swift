@@ -9,18 +9,25 @@ import Foundation
 import CoreData
 import Combine
 
+/// ViewModel responsible for managing match data, handling API interactions, and persisting data using Core Data.
 class MatchViewModel: ObservableObject {
+    /// Published list of matches used to update the UI.
     @Published var matches: [Match] = []
+    
+    /// A set to store Combine subscriptions.
     private var cancellables = Set<AnyCancellable>()
     
+    /// Core Data context for performing database operations.
     private let context: NSManagedObjectContext
 
+    /// Initializes the ViewModel with a Core Data context and fetches stored matches.
+    /// - Parameter context: The `NSManagedObjectContext` used for Core Data operations.
     init(context: NSManagedObjectContext) {
         self.context = context
         fetchSavedMatches()
     }
 
-    /// Fetch matches from API and save them to Core Data
+    /// Fetches match data from an API and saves it to Core Data.
     func fetchMatches() {
         APIService.shared.fetchMatches()
             .sink(receiveCompletion: { completion in
@@ -33,7 +40,8 @@ class MatchViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    // Save data from API into Core Data
+    /// Saves fetched matches to Core Data while preventing duplicates.
+    /// - Parameter matches: The list of `Match` objects retrieved from the API.
     private func saveMatchesToCoreData(_ matches: [Match]) {
         let fetchRequest: NSFetchRequest<MatchEntity> = MatchEntity.fetchRequest()
         
@@ -59,7 +67,7 @@ class MatchViewModel: ObservableObject {
         }
     }
     
-    /// Fetch saved matches from Core Data
+    /// Retrieves and updates the list of matches from Core Data.
     func fetchSavedMatches() {
         let request: NSFetchRequest<MatchEntity> = MatchEntity.fetchRequest()
         do {
@@ -79,7 +87,10 @@ class MatchViewModel: ObservableObject {
         }
     }
 
-    /// Accept or Decline a match
+    /// Updates the match status (Accept/Decline) and saves it in Core Data.
+    /// - Parameters:
+    ///   - match: The `Match` object whose status is being updated.
+    ///   - status: The new status (`"accepted"` or `"declined"`).
     func updateMatchStatus(match: Match, status: String) {
         let request: NSFetchRequest<MatchEntity> = MatchEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", match.id as CVarArg)
