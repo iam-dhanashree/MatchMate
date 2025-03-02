@@ -11,15 +11,17 @@ import CoreData
 
 /// The main view displaying a list of matches fetched from an API.
 struct ContentView: View {
-    /// The view model responsible for handling match data and Core Data operations.
     @StateObject private var viewModel: MatchViewModel
-
-    /// Initializes the view with a Core Data context.
-    /// - Parameter context: The `NSManagedObjectContext` used for Core Data storage.
-    init(context: NSManagedObjectContext) {
-        _viewModel = StateObject(wrappedValue: MatchViewModel(context: context))
+    
+    /// Initializes the view with API and Storage services.
+    /// - Parameters:
+    ///   - apiService: Service conforming to `APIServiceProtocol`.
+    ///   - storageService: Service conforming to `StorageServiceProtocol`.
+    init(apiService: APIServiceProtocol,
+         storageService: StorageServiceProtocol) {
+        _viewModel = StateObject(wrappedValue: MatchViewModel(apiService: apiService, storageService: storageService))
     }
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -48,9 +50,4 @@ struct ContentView: View {
             .background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
         }
     }
-}
-
-#Preview {
-    /// Provides a preview of `ContentView` using a sample Core Data context.
-    ContentView(context: PersistenceController.preview.container.viewContext)
 }

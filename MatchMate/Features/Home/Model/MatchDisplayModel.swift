@@ -1,6 +1,6 @@
 //
-//  MatchMateDisplayModel.swift
-//  MatchMate
+//  MatchDisplayModel.swift
+//  Match
 //
 //  Created by Dhanashree Nandurkar on 25/02/25.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a match with user details.
-struct Match: Identifiable, Codable {
+struct Match: Identifiable {
     /// Unique identifier for the match.
     var id: String
     /// Name of the match.
@@ -24,7 +24,7 @@ struct Match: Identifiable, Codable {
 }
 
 /// Represents the possible statuses for a match.
-enum MatchStatus: String, Codable {
+enum MatchStatus: String {
     /// The match has been accepted.
     case accepted
     /// The match has been declined.

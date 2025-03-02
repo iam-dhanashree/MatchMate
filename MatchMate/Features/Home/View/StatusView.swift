@@ -21,7 +21,7 @@ struct StatusView: View {
                 // Decline Button
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        viewModel.updateMatchStatus(match: match, status: "declined")
+                        viewModel.updateMatchStatus(match: match, status: MatchStatus(rawValue: "declined") ?? .none)
                     }
                 }) {
                     VStack {
@@ -40,7 +40,7 @@ struct StatusView: View {
                 // Accept Button
                 Button(action: {
                     withAnimation(.spring()) {
-                        viewModel.updateMatchStatus(match: match, status: "accepted")
+                        viewModel.updateMatchStatus(match: match, status: MatchStatus(rawValue: "accepted") ?? .none)
                     }
                 }) {
                     VStack {
