@@ -11,16 +11,7 @@ import CoreData
 
 /// The main view displaying a list of matches fetched from an API.
 struct ContentView: View {
-    @StateObject private var viewModel: MatchViewModel
-    
-    /// Initializes the view with API and Storage services.
-    /// - Parameters:
-    ///   - apiService: Service conforming to `APIServiceProtocol`.
-    ///   - storageService: Service conforming to `StorageServiceProtocol`.
-    init(apiService: APIServiceProtocol,
-         storageService: StorageServiceProtocol) {
-        _viewModel = StateObject(wrappedValue: MatchViewModel(apiService: apiService, storageService: storageService))
-    }
+    @ObservedObject var viewModel: MatchViewModel
     
     var body: some View {
         NavigationView {

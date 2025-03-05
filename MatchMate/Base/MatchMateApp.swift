@@ -9,19 +9,16 @@ import SwiftUI
 
 @main
 struct MatchMateApp: App {
-    
-    let persistenceController = PersistenceController.shared
-    let apiService = APIService.shared
-    let storageService: StorageServiceProtocol
-    
+    private let coordinator: any Coordinator
+
     init() {
-        self.storageService = CoreDataStorageService(context: persistenceController.container.viewContext)
+        let container: DependencyContainerProtocol = DependencyContainer()
+        self.coordinator = AppCoordinator(dependencies: container)
     }
-    
+
     var body: some Scene {
         WindowGroup {
-            ContentView(apiService: self.apiService,
-                        storageService: self.storageService)
+            AnyView(coordinator.start())
         }
     }
 }

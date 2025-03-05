@@ -9,15 +9,12 @@ import Foundation
 import Combine
 
 /// Protocol defining API service operations.
-protocol APIServiceProtocol {
+protocol APIServiceProtocol: AnyObject {
     func fetchMatches() -> AnyPublisher<[Match], Error>
 }
 
 /// Implementation of `APIServiceProtocol` that fetches match data from API.
 class APIService: APIServiceProtocol {
-    static let shared = APIService()
-    
-    private init() {}
 
     func fetchMatches() -> AnyPublisher<[Match], Error> {
         let url = URL(string: "https://randomuser.me/api/?results=10")!

@@ -9,14 +9,14 @@ import Foundation
 import CoreData
 
 /// Protocol defining storage operations.
-protocol StorageServiceProtocol {
+protocol CoreDataProtocol {
     func saveMatches(_ matches: [Match])
     func fetchSavedMatches() -> [Match]
     func updateMatchStatus(matchID: String, status: String)
 }
 
 /// Core Data storage implementation of `StorageServiceProtocol`.
-final class CoreDataStorageService: StorageServiceProtocol {
+final class CoreDataManager: CoreDataProtocol {
     private let context: NSManagedObjectContext
 
     init(context: NSManagedObjectContext) {

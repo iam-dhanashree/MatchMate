@@ -15,14 +15,14 @@ class MatchViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private let apiService: APIServiceProtocol
-    private let storageService: StorageServiceProtocol
+    private let storageService: CoreDataProtocol
 
     /// Initializes ViewModel with dependency injection.
     /// - Parameters:
     ///   - apiService: API service implementing `APIServiceProtocol`.
     ///   - storageService: Storage service implementing `StorageServiceProtocol`.
     init(apiService: APIServiceProtocol,
-         storageService: StorageServiceProtocol) {
+         storageService: CoreDataProtocol) {
         self.apiService = apiService
         self.storageService = storageService
         fetchSavedMatches()
